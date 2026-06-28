@@ -1,0 +1,14 @@
+STEP1: open 2 cmd's
+STEP2: run the server first in one of the cmd tabs   [ python server.py ]
+STEP3: open the link for the server.py in a browser
+STEP4: run the client in the second tap   [ python client.py ]
+STEP5: open the link for the client.py in a browser
+STEP6: Enter the ip address of your private network in both setups and the port 
+
+        NOTE: you must set up the server first the the client and the client 
+              must have the same ip address as the server and port 
+STEP7: click conect on the server setup then the client
+
+ENJOOYYY!!!!!!
+
+

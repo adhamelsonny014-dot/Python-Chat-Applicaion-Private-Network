@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureChat</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+  <div class="chat-container">
+
+    <!-- HEADER -->
+    <div class="chat-header">
+      <div class="header-content">
+        <div class="avatar-wrap" id="avatar-wrap">
+          <img src="https://i.pravatar.cc/150?img=5" alt="Profile" id="other-user-avatar">
+          <div class="avatar-ring"></div>
+          <div class="status-dot" id="status-dot"></div>
+        </div>
+        <div class="user-info">
+          <h3 id="other-user-name">Connecting...</h3>
+          <p id="user-status" class="offline">offline</p>
+        </div>
+        <div class="header-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          AES-256-GCM
+        </div>
+      </div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="chat-messages" id="messages"></div>
+
+    <!-- INPUT BAR -->
+    <div class="chat-input">
+      <div class="enc-indicator">
+        <div class="enc-dot"></div>
+        E2E
+      </div>
+      <input type="text" id="message-input" placeholder="Encrypted message..." autocomplete="off">
+      <button class="send-btn" id="send-button" aria-label="Send">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+  <script src="/static/script.js"></script>
+  <script>
+    // Sync avatar-wrap online class with status
+    const _origUpdateUI = window.updateUI;
+    function patchAvatarRing(online) {
+      const wrap = document.getElementById('avatar-wrap');
+      const dot  = document.getElementById('status-dot');
+      if (online) { wrap.classList.add('online'); dot.classList.add('online'); dot.classList.remove('offline'); }
+      else        { wrap.classList.remove('online'); dot.classList.remove('online'); dot.classList.add('offline'); }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      // Patch updateUI after script.js loads
+      const orig = window.updateUI;
+      window.updateUI = function() {
+        if (orig) orig();
+        patchAvatarRing(window.otherUser && window.otherUser.online);
+      };
+    });
+  </script>
+</body>
+</html>
