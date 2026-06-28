@@ -126,4 +126,4 @@ See `client_server_architecture_overview.svg` in the project root for a visual o
 
 ## License
 
-This project was developed as an academic assignment for CS401 Secure Communication.
+This project was developed as an academic assignment for CS322 (Network Fundameltals) Course.
